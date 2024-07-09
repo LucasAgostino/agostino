@@ -18,6 +18,14 @@ public class Vigilador {
     private Date fechaNacimiento;
     private int dni;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
