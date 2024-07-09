@@ -14,8 +14,17 @@ public class Vigilador {
     private long legajo;
     private String nombre;
     private String apellido;
-    private Date fechanac;
+    @Column(name = "fecha_nacimiento")
+    private Date fechaNacimiento;
     private int dni;
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
 
     public long getLegajo() {
         return legajo;
@@ -39,14 +48,6 @@ public class Vigilador {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
-    }
-
-    public Date getFechanac() {
-        return fechanac;
-    }
-
-    public void setFechanac(Date fechanac) {
-        this.fechanac = fechanac;
     }
 
     public int getDni() {

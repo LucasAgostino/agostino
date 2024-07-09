@@ -18,8 +18,10 @@ public class Registro {
     @JoinColumn(name = "objetivo_id") // Nombre de la columna en la tabla 'registro' que referencia al objetivo
     private Objetivo objetivo;
 
-    private LocalDateTime horaini;
-    private LocalDateTime horafin;
+    @Column(name = "hora_inicio")
+    private LocalDateTime horaInicio;
+    @Column(name = "hora_fin")
+    private LocalDateTime horaFin;
 
     public long getId() {
         return id;
@@ -44,20 +46,20 @@ public class Registro {
     public void setObjetivo(Objetivo objetivo) {
         this.objetivo = objetivo;
     }
-
-    public LocalDateTime getHoraini() {
-        return horaini;
+    
+    public LocalDateTime getHoraInicio() {
+        return horaInicio;
     }
 
-    public void setHoraini(LocalDateTime horaini) {
-        this.horaini = horaini;
+    public void setHoraInicio(LocalDateTime horaInicio) {
+        this.horaInicio = horaInicio;
     }
 
-    public LocalDateTime getHorafin() {
-        return horafin;
+    public LocalDateTime getHoraFin() {
+        return horaFin;
     }
 
-    public void setHorafin(LocalDateTime horafin) {
-        this.horafin = horafin;
+    public void setHoraFin(LocalDateTime horaFin) {
+        this.horaFin = horaFin;
     }
 }
