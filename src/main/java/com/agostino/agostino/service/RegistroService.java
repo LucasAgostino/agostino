@@ -26,7 +26,8 @@ public class RegistroService {
         registrorepository.save(registro);
     }
 
-    public HorasTrabajadas horasmestotalesvigi(long legajo, int year, int month) {
+    /* Calcula las horas totales del mes y tambien llama a la funcion para calcular las horas nocturnas */
+    public HorasTrabajadas getHorasTrabajadas(long legajo, int year, int month) {
         Vigilador vigilador = vigiladorrepository.findByLegajo(legajo);
         long totalHours = 0;
         if (vigilador != null) {
@@ -46,8 +47,8 @@ public class RegistroService {
     }
 
     public long getTotalNocturnalHoursWorked(int year, int month, Long vigiladorId) {
-        List<Registro> registros = registrorepository.findAllByYearAndMonthAndVigilador(year, month, vigiladorId); 
-           /* Consigue todos los registros de un vigilador en un mes y año exactos*/
+        List<Registro> registros = registrorepository.findAllByYearAndMonthAndVigilador(year, month, vigiladorId);
+        /* Consigue todos los registros de un vigilador en un mes y año exactos */
         long totalNocturnalHours = 0; // Crea la variable para saber la cantidad de horas totales trabajadas en el
                                       // turno noche
 
@@ -80,4 +81,12 @@ public class RegistroService {
         return totalNocturnalHours;
     }
 
+    public double calcularCostoTotal(long legajo, int year, int month, double valorHoraDia, double valorHoraNoche) {
+        HorasTrabajadas horasTrabajadas = getHorasTrabajadas(legajo, year, month);
+        long totalHoras = horasTrabajadas.getTotalHours();
+        long horasNocturnas = horasTrabajadas.getNocturnalHours();
+
+        long horasDiurnas = totalHoras - horasNocturnas;
+        return (horasDiurnas * valorHoraDia) + (horasNocturnas * valorHoraNoche);
+    }
 }
