@@ -8,8 +8,16 @@ import com.agostino.agostino.repository.Ivigilador;
 
 @Service
 public class VigiladorService {
-    @Autowired private Ivigilador vigiladorrepository;
-    public void guardarvigilador(Vigilador vigilador){
+
+    @Autowired
+    private Ivigilador vigiladorrepository;
+
+    public void guardarVigilador(Vigilador vigilador) {
         vigiladorrepository.save(vigilador);
     }
+
+    public Vigilador buscarPorLegajo(long legajo) {
+        return vigiladorrepository.findByLegajo(legajo);
+    }
+
 }

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AgostinoApplication<agostino>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.agostino.agostino.AgostinoApplication",
+            "projectName": "agostino",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
