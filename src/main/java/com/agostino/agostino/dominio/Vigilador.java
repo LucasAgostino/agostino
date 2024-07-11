@@ -1,7 +1,6 @@
 package com.agostino.agostino.dominio;
 
 import jakarta.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "vigilador")
@@ -14,8 +13,6 @@ public class Vigilador {
     private long legajo;
     private String nombre;
     private String apellido;
-    @Column(name = "fecha_nacimiento")
-    private Date fechaNacimiento;
     private int dni;
 
     public Long getId() {
@@ -24,14 +21,6 @@ public class Vigilador {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
     }
 
     public long getLegajo() {
