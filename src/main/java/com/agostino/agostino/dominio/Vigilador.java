@@ -1,6 +1,11 @@
 package com.agostino.agostino.dominio;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "vigilador")
@@ -13,7 +18,6 @@ public class Vigilador {
     private long legajo;
     private String nombre;
     private String apellido;
-    private int dni;
 
     public Long getId() {
         return id;
@@ -45,13 +49,5 @@ public class Vigilador {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
-    }
-
-    public int getDni() {
-        return dni;
-    }
-
-    public void setDni(int dni) {
-        this.dni = dni;
     }
 }

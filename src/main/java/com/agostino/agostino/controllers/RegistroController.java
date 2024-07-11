@@ -13,7 +13,7 @@ import com.agostino.agostino.dominio.Registro;
 import com.agostino.agostino.service.RegistroService;
 
 @RestController
-@RequestMapping("/registros")
+@RequestMapping("/registro")
 public class RegistroController {
 
     @Autowired

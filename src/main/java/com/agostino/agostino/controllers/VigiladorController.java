@@ -12,7 +12,7 @@ import com.agostino.agostino.dominio.Vigilador;
 import com.agostino.agostino.service.VigiladorService;
 
 @RestController
-@RequestMapping("/vigiladores")
+@RequestMapping("/vigilador")
 public class VigiladorController {
 
     @Autowired
