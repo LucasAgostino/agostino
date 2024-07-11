@@ -52,8 +52,8 @@ public class RegistroService {
         long totalNocturnalHours = 0; // Crea la variable para saber la cantidad de horas totales trabajadas en el
                                       // turno noche
 
-        LocalTime nocturnalStart = LocalTime.of(18, 0); // Asigna la hora a la que inicia el turno nocturno
-        LocalTime nocturnalEnd = LocalTime.of(6, 0); // Asigna la hora a la que termina el turno nocturno
+        LocalTime nocturnalStart = LocalTime.of(21, 0); // Asigna la hora a la que inicia el turno nocturno
+        LocalTime nocturnalEnd = LocalTime.of(5, 0); // Asigna la hora a la que termina el turno nocturno
 
         for (Registro registro : registros) { // Recorre la lista de registro
             LocalDateTime start = registro.getFechaInicio(); // Consigue la fecha de inicio del registro
