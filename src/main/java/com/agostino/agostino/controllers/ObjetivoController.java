@@ -10,7 +10,7 @@ import com.agostino.agostino.dominio.Objetivo;
 import com.agostino.agostino.service.ObjetivoService;
 
 @RestController
-@RequestMapping("/api/objetivos")
+@RequestMapping("/objetivos")
 public class ObjetivoController {
 
     @Autowired
