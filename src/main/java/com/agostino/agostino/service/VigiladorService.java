@@ -10,14 +10,34 @@ import com.agostino.agostino.repository.Ivigilador;
 public class VigiladorService {
 
     @Autowired
-    private Ivigilador vigiladorrepository;
+    private Ivigilador vigiladorRepository;
 
     public void guardarVigilador(Vigilador vigilador) {
-        vigiladorrepository.save(vigilador);
+        // Verificar si el supervisorLegajo existe (si no es null)
+        if (vigilador.getSupervisorLegajo() != null) {
+            // Aquí debes usar el método adecuado para verificar la existencia por legajo
+            boolean supervisorExists = vigiladorRepository.existsByLegajo(vigilador.getSupervisorLegajo());
+            if (!supervisorExists) {
+                throw new RuntimeException("El legajo del supervisor no existe");
+            }
+        }
+
+        // Guardar el vigilador si pasa las validaciones
+        vigiladorRepository.save(vigilador);
     }
 
-    public Vigilador buscarPorLegajo(long legajo) {
-        return vigiladorrepository.findByLegajo(legajo);
+    public Vigilador findByLegajo(long legajo) {
+        return vigiladorRepository.findByLegajo(legajo);
+    }
+    public void actualizarSupervisor(Long legajo, Long nuevoSupervisorLegajo) {
+        // Obtener el vigilador que deseas actualizar
+        Vigilador vigilador = vigiladorRepository.findByLegajo(legajo);
+
+        // Actualizar el supervisor legajo
+        vigilador.setSupervisorLegajo(nuevoSupervisorLegajo);
+
+        // Guardar los cambios en la base de datos
+        vigiladorRepository.save(vigilador);
     }
 
 }

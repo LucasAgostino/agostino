@@ -10,4 +10,6 @@ public interface Ivigilador extends JpaRepository <Vigilador, Long> {
 
     public Vigilador findByLegajo(long legajo);
 
+    public boolean existsByLegajo(Long supervisorLegajo);
+
 }

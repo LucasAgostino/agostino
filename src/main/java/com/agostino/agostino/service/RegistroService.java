@@ -82,31 +82,31 @@ public class RegistroService {
         return totalNocturnalHours;
     }
     
-    private long getHorasTrabajadasEnFeriado(List<Registro> registros) {
+    public long getHorasTrabajadasEnFeriado(List<Registro> registros) {
         long totalFeriadoHours = 0;
     
         for (Registro registro : registros) {
             LocalDateTime start = registro.getFechaInicio();
             LocalDateTime end = registro.getFechaFin();
     
-            while (start.isBefore(end)) {
-                LocalDateTime endOfDay = start.toLocalDate().atStartOfDay().plusDays(1);
+            LocalDateTime currentDateTime = start;
+    
+            // Iterar día por día dentro del período del registro
+            while (!currentDateTime.isAfter(end)) {
+                LocalDateTime endOfDay = currentDateTime.toLocalDate().atTime(23, 59, 59); // Fin del día actual
+                LocalDateTime nextDay = currentDateTime.plusDays(1).toLocalDate().atStartOfDay(); // Inicio del siguiente día
+    
+                // Calcular el período actual (desde currentDateTime hasta el fin del día o end, lo que ocurra primero)
                 LocalDateTime periodEnd = end.isBefore(endOfDay) ? end : endOfDay;
     
-                // Verifica si el inicio es un día feriado
-                if (feriadorepository.isFeriado(start.toLocalDate())) {
-                    Duration duration = Duration.between(start, periodEnd);
+                // Verificar si el día actual es feriado
+                if (feriadorepository.isFeriado(currentDateTime.toLocalDate())) {
+                    Duration duration = Duration.between(currentDateTime, periodEnd.plusSeconds(1)); // Asegura que se incluya el último segundo
                     totalFeriadoHours += duration.toHours();
                 }
     
-                // Si el período termina en un día feriado
-                if (feriadorepository.isFeriado(periodEnd.toLocalDate())) {
-                    Duration duration = Duration.between(start, periodEnd);
-                    totalFeriadoHours += duration.toHours();
-                }
-    
-                // Actualiza el inicio para el siguiente ciclo
-                start = periodEnd;
+                // Mover al siguiente día
+                currentDateTime = nextDay;
             }
         }
     

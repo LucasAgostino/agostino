@@ -1,9 +1,9 @@
 package com.agostino.agostino.dominio;
 
 public class HorasTrabajadas {
-        private long totalHours;
-        private long nocturnalHours;
-        private long feriadoHours;
+        private final long totalHours;
+        private final long nocturnalHours;
+        private final long feriadoHours;
     
         public HorasTrabajadas(long totalHours, long nocturnalHours, long feriadoHours) {
             this.totalHours = totalHours;

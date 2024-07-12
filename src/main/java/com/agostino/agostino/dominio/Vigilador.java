@@ -19,6 +19,9 @@ public class Vigilador {
     private String nombre;
     private String apellido;
 
+    @Column(name = "supervisor_legajo")
+    private Long supervisorLegajo;
+
     public Long getId() {
         return id;
     }
@@ -49,5 +52,13 @@ public class Vigilador {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public Long getSupervisorLegajo() {
+        return supervisorLegajo;
+    }
+
+    public void setSupervisorLegajo(Long supervisorLegajo) {
+        this.supervisorLegajo = supervisorLegajo;
     }
 }
