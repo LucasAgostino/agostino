@@ -33,15 +33,4 @@ public class RegistroController {
             @RequestParam int month) {
         return registroService.getHorasTrabajadas(legajo, year, month);
     }
-
-    // Endpoint para calcular el costo total basado en horas trabajadas y tarifas por hora
-    @GetMapping("/calcular-costo")
-    public double calcularCostoTotal(
-            @RequestParam long legajo,
-            @RequestParam int year,
-            @RequestParam int month,
-            @RequestParam double valorHoraDia,
-            @RequestParam double valorHoraNoche) {
-        return registroService.calcularCostoTotal(legajo, year, month, valorHoraDia, valorHoraNoche);
-    }
 }

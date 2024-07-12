@@ -20,6 +20,8 @@ public class RegistroService {
     private Iregistro registrorepository;
     @Autowired
     private Ivigilador vigiladorrepository;
+    @Autowired
+    private FeriadoService feriadorepository;
 
     // Validar si el vigilador y el objetivo existen antes de guardar el registro
     public void guardarRegistro(Registro registro) {
@@ -38,17 +40,16 @@ public class RegistroService {
                 Duration duration = Duration.between(registro.getFechaInicio(), registro.getFechaFin());
                 totalHours += duration.toHours();
             }
-            long horasNocturnas = getTotalNocturnalHoursWorked(year, month, id);
-            return new HorasTrabajadas(totalHours, horasNocturnas);
+            long horasNocturnas = getTotalNocturnalHoursWorked(registros);
+            long horasFeriados = getHorasTrabajadasEnFeriado(registros);
+            return new HorasTrabajadas(totalHours, horasNocturnas,horasFeriados);
 
         } else {
-            return new HorasTrabajadas(0, 0);
+            return new HorasTrabajadas(0, 0, 0);
         }
     }
 
-    public long getTotalNocturnalHoursWorked(int year, int month, Long vigiladorId) {
-        List<Registro> registros = registrorepository.findAllByYearAndMonthAndVigilador(year, month, vigiladorId);
-        /* Consigue todos los registros de un vigilador en un mes y año exactos */
+    private long getTotalNocturnalHoursWorked(List<Registro> registros) {
         long totalNocturnalHours = 0; // Crea la variable para saber la cantidad de horas totales trabajadas en el
                                       // turno noche
 
@@ -80,13 +81,36 @@ public class RegistroService {
         }
         return totalNocturnalHours;
     }
-
-    public double calcularCostoTotal(long legajo, int year, int month, double valorHoraDia, double valorHoraNoche) {
-        HorasTrabajadas horasTrabajadas = getHorasTrabajadas(legajo, year, month);
-        long totalHoras = horasTrabajadas.getTotalHours();
-        long horasNocturnas = horasTrabajadas.getNocturnalHours();
-
-        long horasDiurnas = totalHoras - horasNocturnas;
-        return (horasDiurnas * valorHoraDia) + (horasNocturnas * valorHoraNoche);
+    
+    private long getHorasTrabajadasEnFeriado(List<Registro> registros) {
+        long totalFeriadoHours = 0;
+    
+        for (Registro registro : registros) {
+            LocalDateTime start = registro.getFechaInicio();
+            LocalDateTime end = registro.getFechaFin();
+    
+            while (start.isBefore(end)) {
+                LocalDateTime endOfDay = start.toLocalDate().atStartOfDay().plusDays(1);
+                LocalDateTime periodEnd = end.isBefore(endOfDay) ? end : endOfDay;
+    
+                // Verifica si el inicio es un día feriado
+                if (feriadorepository.isFeriado(start.toLocalDate())) {
+                    Duration duration = Duration.between(start, periodEnd);
+                    totalFeriadoHours += duration.toHours();
+                }
+    
+                // Si el período termina en un día feriado
+                if (feriadorepository.isFeriado(periodEnd.toLocalDate())) {
+                    Duration duration = Duration.between(start, periodEnd);
+                    totalFeriadoHours += duration.toHours();
+                }
+    
+                // Actualiza el inicio para el siguiente ciclo
+                start = periodEnd;
+            }
+        }
+    
+        return totalFeriadoHours;
     }
-}
+    
+    }
