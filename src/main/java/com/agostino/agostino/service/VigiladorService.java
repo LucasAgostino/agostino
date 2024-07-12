@@ -1,5 +1,7 @@
 package com.agostino.agostino.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +40,9 @@ public class VigiladorService {
 
         // Guardar los cambios en la base de datos
         vigiladorRepository.save(vigilador);
+    }
+    public List<Vigilador> obtenerVigiladoresPorSupervisorLegajo(Long supervisorLegajo) {
+        return vigiladorRepository.findAllBySupervisorLegajo(supervisorLegajo);
     }
 
 }

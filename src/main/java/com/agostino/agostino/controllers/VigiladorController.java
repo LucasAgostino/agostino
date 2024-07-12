@@ -1,5 +1,7 @@
 package com.agostino.agostino.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.agostino.agostino.dominio.Vigilador;
 import com.agostino.agostino.service.VigiladorService;
+
 
 
 @RestController
@@ -47,4 +50,9 @@ public class VigiladorController {
         }
     }
 
+    @GetMapping("/{legajo}/vigilador")
+    public List<Vigilador> buscarVigiladoresDeSupervisor(@PathVariable("legajo") Long legajo) {
+        return vigiladorService.obtenerVigiladoresPorSupervisorLegajo(legajo);
+    }
+    
 }
