@@ -25,4 +25,10 @@ public class FeriadoService {
     public List<Feriado> findAllFeriados(){
         return feriadoRepository.findAll();
     }
+    public void eliminarFeriado(Long id) {
+        Feriado feriado = feriadoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Feriado no encontrado con id: " + id));
+
+        feriadoRepository.delete(feriado);
+    }
 }
