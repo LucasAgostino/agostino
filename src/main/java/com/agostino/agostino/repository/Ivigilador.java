@@ -15,4 +15,6 @@ public interface Ivigilador extends JpaRepository <Vigilador, Long> {
     public boolean existsByLegajo(Long supervisorLegajo);
 
     public List<Vigilador> findAllBySupervisorLegajo(Long supervisorLegajo);
+
+    public List<Vigilador> findAllByOrderByLegajoAsc();
 }

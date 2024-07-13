@@ -22,6 +22,13 @@ public class Vigilador {
     @Column(name = "supervisor_legajo")
     private Long supervisorLegajo;
 
+    @Column(name = "activo")
+    private boolean activo = true;
+
+    public Vigilador() {
+        this.activo = true; // Establecer el valor predeterminado en el constructor
+    }
+
     public Long getId() {
         return id;
     }
@@ -60,5 +67,13 @@ public class Vigilador {
 
     public void setSupervisorLegajo(Long supervisorLegajo) {
         this.supervisorLegajo = supervisorLegajo;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }

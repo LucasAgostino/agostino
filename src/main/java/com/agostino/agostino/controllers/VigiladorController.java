@@ -17,6 +17,7 @@ import com.agostino.agostino.service.VigiladorService;
 
 
 
+
 @RestController
 @RequestMapping("/vigilador")
 public class VigiladorController {
@@ -53,6 +54,22 @@ public class VigiladorController {
     @GetMapping("/{legajo}/vigilador")
     public List<Vigilador> buscarVigiladoresDeSupervisor(@PathVariable("legajo") Long legajo) {
         return vigiladorService.obtenerVigiladoresPorSupervisorLegajo(legajo);
+    }
+
+    @GetMapping("/todos")
+    public List<Vigilador> getMethodName() {
+        return vigiladorService.findAll();
+    }
+    
+    // Endpoint para cambiar el estado activo de un vigilador por legajo
+    @PutMapping("/{legajo}/estado")
+    public ResponseEntity<String> cambiarEstadoActivoPorLegajo(@PathVariable("legajo") long legajo) {
+        try {
+            String mensaje = vigiladorService.cambiarEstadoActivoPorLegajo(legajo);
+            return ResponseEntity.ok(mensaje);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     
 }
