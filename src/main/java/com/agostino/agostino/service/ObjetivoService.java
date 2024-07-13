@@ -1,5 +1,7 @@
 package com.agostino.agostino.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,10 @@ public class ObjetivoService {
         } else {
             return "Objetivo dado de baja correctamente";
         }
+    }
+
+    public List<Objetivo> findAll(){
+        return objetivoRepository.findAll();
     }
 
     // Otros métodos de servicio para operaciones con objetivos

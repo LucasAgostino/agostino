@@ -112,5 +112,12 @@ public class RegistroService {
     
         return totalFeriadoHours;
     }
-    
+    public void eliminarRegistro(Long id) {
+        // Obtener el registro por su ID
+        Registro registro = registrorepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Registro no encontrado con id: " + id));
+
+        // Eliminar el registro
+        registrorepository.delete(registro);
     }
+}
