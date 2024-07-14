@@ -40,16 +40,16 @@ public class VigiladorController {
     // Endopoint para asignarle un supervisor a un vigilador
     @PutMapping("/{legajo}/supervisor")
     public ResponseEntity<String> actualizarSupervisor(
-            @PathVariable("legajo") Long legajo,
-            @RequestBody Long nuevoSupervisorLegajo) {
+        @PathVariable("legajo") Long legajo,
+        @RequestBody Long nuevoSupervisorLegajo) {
 
-        try {
-            vigiladorService.actualizarSupervisor(legajo, nuevoSupervisorLegajo);
-            return ResponseEntity.ok("Supervisor actualizado correctamente");
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    try {
+        vigiladorService.actualizarSupervisor(legajo, nuevoSupervisorLegajo);
+        return ResponseEntity.ok("Supervisor actualizado correctamente");
+    } catch (RuntimeException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
+}
 
     @GetMapping("/{legajo}/vigilador")
     public List<Vigilador> buscarVigiladoresDeSupervisor(@PathVariable("legajo") Long legajo) {

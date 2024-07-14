@@ -35,8 +35,13 @@ public class VigiladorService {
         // Obtener el vigilador que deseas actualizar
         Vigilador vigilador = vigiladorRepository.findByLegajo(legajo);
 
-        // Actualizar el supervisor legajo
-        vigilador.setSupervisorLegajo(nuevoSupervisorLegajo);
+        if (nuevoSupervisorLegajo != 0) {
+            // Actualizar el supervisor legajo solo si nuevoSupervisorLegajo no es null
+            vigilador.setSupervisorLegajo(nuevoSupervisorLegajo);
+        } else {
+            // Si nuevoSupervisorLegajo es null, significa que no hay supervisor
+            vigilador.setSupervisorLegajo(null); // Asegúrate de que tu entidad Vigilador permita supervisorLegajo nullable
+        }
 
         // Guardar los cambios en la base de datos
         vigiladorRepository.save(vigilador);
