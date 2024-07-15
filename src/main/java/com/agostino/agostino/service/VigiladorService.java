@@ -34,18 +34,28 @@ public class VigiladorService {
     public void actualizarSupervisor(Long legajo, Long nuevoSupervisorLegajo) {
         // Obtener el vigilador que deseas actualizar
         Vigilador vigilador = vigiladorRepository.findByLegajo(legajo);
-
+    
+        // Verificar si el nuevo supervisor legajo existe antes de asignarlo
         if (nuevoSupervisorLegajo != 0) {
-            // Actualizar el supervisor legajo solo si nuevoSupervisorLegajo no es null
-            vigilador.setSupervisorLegajo(nuevoSupervisorLegajo);
+            // Consultar si el supervisor existe en la base de datos
+            Vigilador supervisor = vigiladorRepository.findByLegajo(nuevoSupervisorLegajo);
+            
+            if (supervisor != null) {
+                // Actualizar el supervisor legajo solo si el supervisor existe
+                vigilador.setSupervisorLegajo(nuevoSupervisorLegajo);
+            } else {
+                // Manejar el caso donde el supervisor no existe
+                throw new IllegalArgumentException("El supervisor con legajo " + nuevoSupervisorLegajo + " no existe.");
+            }
         } else {
-            // Si nuevoSupervisorLegajo es null, significa que no hay supervisor
+            // Si nuevoSupervisorLegajo es null o 0, significa que no hay supervisor
             vigilador.setSupervisorLegajo(null); // Asegúrate de que tu entidad Vigilador permita supervisorLegajo nullable
         }
-
+    
         // Guardar los cambios en la base de datos
         vigiladorRepository.save(vigilador);
     }
+    
     public List<Vigilador> obtenerVigiladoresPorSupervisorLegajo(Long supervisorLegajo) {
         return vigiladorRepository.findAllBySupervisorLegajo(supervisorLegajo);
     }
